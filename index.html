@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Emulator</title>
+  <title>Nostalgist Emulator</title>
 
   <style>
     html, body {
@@ -39,7 +39,7 @@
 <div id="game"></div>
 
 <script type="module">
-  import { launch } from "https://unpkg.com/nostalgist/dist/nostalgist.js";
+  import Nostalgist from "https://unpkg.com/nostalgist/dist/nostalgist.js";
 
   const overlay = document.getElementById("overlay");
   const game = document.getElementById("game");
@@ -51,15 +51,15 @@
     overlay.remove();
 
     try {
-      await launch({
+      await Nostalgist.launch({
         element: game,
-        core: "snes9x", 
-        rom: "roms/Mortal Kombat II (USA) (Rev 1) (2).sfc",
+        core: "snes9x", // NES test (safe)
+        rom: "https://raw.githubusercontent.com/thePOSTALdude37/Austinssillyshenangins/main/roms/test.nes",
         autoStart: true
       });
     } catch (e) {
       console.error(e);
-      alert("Launch failed — open console");
+      alert("Emulator failed — check console");
     }
   });
 </script>
