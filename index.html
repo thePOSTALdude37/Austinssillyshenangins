@@ -1,63 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Nostalgist Emulator</title>
-
-
-<!-- Nostalgist.js CDN -->
-<script src="https://unpkg.com/nostalgist"></script>
-
-
-<style>
-html, body {
-margin: 0;
-padding: 0;
-width: 100%;
-height: 100%;
-background: black;
-overflow: hidden;
-}
-#game {
-width: 100vw;
-height: 100vh;
-}
-.hint {
-position: fixed;
-bottom: 10px;
-left: 50%;
-transform: translateX(-50%);
-color: #aaa;
-font-family: monospace;
-font-size: 12px;
-opacity: 0.7;
-}
-</style>
-</head>
-<body>
-
-
-<div id="game"></div>
-<div class="hint">click to start • esc to exit fullscreen</div>
-
-
 <script>
-async function startGame() {
-await Nostalgist.launch({
-element: document.getElementById("game"),
+  let started = false;
 
+  async function startGame() {
+    if (started) return;
+    started = true;
 
-// 🔁 CHANGE THIS
-core: "snes9x",
-rom: "roms/Mortal Kombat II (USA) (Rev 1) (2).sfc"
-})
-}
+    try {
+      await Nostalgist.launch({
+        element: document.getElementById("game"),
+        core: "snes9x",
+        rom: "https://raw.githubusercontent.com/thePOSTALdude37/Austinssillyshenangins/main/roms/mk2.sfc",
 
+        // 🔥 IMPORTANT FIXES
+        fullscreen: false,
+        autoStart: true
+      });
+    } catch (err) {
+      console.error("Nostalgist failed:", err);
+      alert("Emulator failed to load. Check console.");
+    }
+  }
 
-// browser audio rules
-document.body.addEventListener("click", startGame, { once: true })
+  // MUST be a user gesture
+  document.addEventListener("click", startGame, { once: true });
 </script>
-
-
-</body>
-</html>
